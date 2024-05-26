@@ -11,6 +11,18 @@ internal class GraphGenerator
 {
     private Random random = new Random();
 
+    public List<Graph> GenerateGraphList(int numberOfGraphs, int numberOfVertices, double density)
+    {
+        List<Graph> graphs = new List<Graph>();
+
+        Parallel.For(0, numberOfGraphs, x =>
+        {
+            graphs.Add(GenerateRandomGraph(numberOfVertices, density));
+        });
+
+        return graphs;
+    }
+
     public Graph GenerateRandomGraph(int numberOfVertices, double density)
     {
         List<Vertex> vertices = GenerateVertices(numberOfVertices);
@@ -23,7 +35,7 @@ internal class GraphGenerator
         List<Vertex> vertices = new List<Vertex>();
         for (int i = 0; i < numberOfVertices; i++)
         {
-            vertices.Add(new Vertex(i, random.Next(1, 5)));
+            vertices.Add(new Vertex(i, 0);
         }
         return vertices;
     }
