@@ -1,0 +1,12 @@
+11 10
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 4
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 3
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 4
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 1
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 1
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 3
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 4
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 4
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 1
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 2
+Projekt_2.Model.Vertex Projekt_2.Model.Vertex 2

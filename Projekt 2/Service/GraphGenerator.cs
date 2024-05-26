@@ -32,11 +32,9 @@ internal class GraphGenerator
 
     private List<Vertex> GenerateVertices(int numberOfVertices)
     {
-        List<Vertex> vertices = new List<Vertex>();
-        for (int i = 0; i < numberOfVertices; i++)
-        {
-            vertices.Add(new Vertex(i, 0);
-        }
+        List<Vertex> vertices = Enumerable.Range(0, numberOfVertices)
+                                           .Select(i => new Vertex(i, 0))
+                                           .ToList();
         return vertices;
     }
 
