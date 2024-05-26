@@ -38,39 +38,44 @@ internal class GraphGenerator
         return vertices;
     }
 
-    private List<Edge> GenerateEdges(List<Vertex> vertices, double density)
+    private List<Edge> GenerateEdges(List<Vertex> verticesList, double density)
     {
-        List<Edge> edges = new List<Edge>();
-        int maxPossibleEdges = (vertices.Count * (vertices.Count - 1)) / 2;             // Max possible edges in a complete graph
-        int numberOfEdges = (int)Math.Round(maxPossibleEdges * density / 100);
+        int maxPossibleEdges = (verticesList.Count * (verticesList.Count - 1)) / 2;             // Max possible edges in a complete graph
+        int edges = (int)Math.Round(maxPossibleEdges * density / 100);
+        HashSet<Tuple<int, int>> usedEdges = new HashSet<Tuple<int, int>>();
 
-        HashSet<Tuple<int, int>> existingEdges = new HashSet<Tuple<int, int>>();        // To avoid duplicate edges
+        List<Edge> edgeList = new List<Edge>();
 
-        for (int i = 0; i < numberOfEdges; i++)
+        // Connect each vertex with at least one other vertex
+        for (int i = 0; i < verticesList.Count; i++)
         {
-            int sourceIndex = random.Next(vertices.Count);
-            int destinationIndex = random.Next(vertices.Count);
-
-            // Avoid creating self-loops
-            while (sourceIndex == destinationIndex)
+            int destination = random.Next(verticesList.Count);
+            while (destination == i)
             {
-                destinationIndex = random.Next(vertices.Count);
+                destination = random.Next(verticesList.Count);
             }
+            int weight = random.Next(1, 10); // Random weight from 1 to 10
+            edgeList.Add(new Edge(verticesList[i], verticesList[destination], weight));
+            usedEdges.Add(new Tuple<int, int>(Math.Min(i, destination), Math.Max(i, destination)));
+        }
 
-            var edgeTuple = new Tuple<int, int>(sourceIndex, destinationIndex);
+        edges -= verticesList.Count; // Reduce the remaining edges count
 
-            // Avoid duplicate edges
-            if (!existingEdges.Contains(edgeTuple))
+        // Create remaining edges
+        while (edges > 0)
+        {
+            int source = random.Next(verticesList.Count);
+            int destination = random.Next(verticesList.Count);
+
+            if (source != destination && !usedEdges.Contains(new Tuple<int, int>(Math.Min(source, destination), Math.Max(source, destination))))
             {
-                existingEdges.Add(edgeTuple);
-                edges.Add(new Edge(vertices[sourceIndex], vertices[destinationIndex], random.Next(1, 5)));    // Assign random weight to edge
-            }
-            else
-            {
-                i--; // Try generating another edge
+                usedEdges.Add(new Tuple<int, int>(Math.Min(source, destination), Math.Max(source, destination)));
+                int weight = random.Next(1, 5); // Random weight from 1 to 5
+                edgeList.Add(new Edge(verticesList[source], verticesList[destination], weight));
+                edges--;
             }
         }
 
-        return edges;
+        return edgeList;
     }
 }

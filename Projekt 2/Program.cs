@@ -10,7 +10,7 @@ namespace Projekt_2
             var g = graphGenerator.GenerateRandomGraph(10, 25);
             WorkingWithFile workingWithFile = new WorkingWithFile();
             workingWithFile.WriteDataToFile("25%\\10", g);
-            var g1 = workingWithFile.ReadDataFromFile("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\25%\\10\\1.txt");
+            var g1 = workingWithFile.ReadDataFromFile("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\25%\\10\\0.txt");
         }
     }
 }
