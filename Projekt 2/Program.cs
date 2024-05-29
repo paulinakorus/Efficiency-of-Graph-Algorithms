@@ -10,9 +10,9 @@ namespace Projekt_2
             DirectoryFolder directoryFolder = new DirectoryFolder();
             //await directoryFolder.GeneratingGraphsAndWritingToFileAsync();
             WorkingWithFile workingWithFile = new WorkingWithFile();
-            var graph = await workingWithFile.ReadDataFromFileAsync("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\25%\\100\\0.txt");
-            Matrix matrix = new Matrix();
-            var ma = matrix.AdjacencyMatrix(graph);
+            var graph = await workingWithFile.ReadDataFromFileAsync("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\undirected\\25%\\20\\0.txt");
+            MatrixGraph matrix = new MatrixGraph();
+            //var ma = matrix.AdjacencyMatrix(graph);
             
             //Algorithms algorithms = new Algorithms();
             //var list = graph.Vertices;
@@ -36,8 +36,22 @@ namespace Projekt_2
 
             List<Edge> edges = new List<Edge> { e01, e03, e04, e05, e06, e07 };
 
-            //Graph graph1 = new Graph(vertices, edges);
-            //algorithms.Dijkstra(graph1, v0);
+            /*
+             *
+            Uploading uploading = new Uploading();
+            uploading.UploadListGraph(graph1);
+            uploading.UploadMatrixGraph(graph1);
+            ListGraph matrixList = new ListGraph();
+            */
+
+            Graph graph1 = new Graph(vertices, edges);
+
+            Algorithms algorithms = new Algorithms();
+            var start = graph.Vertices[0];
+            //ListGraph listGraph = new ListGraph();
+            //var list = listGraph.GetPredecessors(graph);
+
+            algorithms.BellmanFordMatrix(graph);
             
         }
     }

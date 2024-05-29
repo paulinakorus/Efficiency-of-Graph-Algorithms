@@ -9,7 +9,7 @@ namespace Projekt_2.Service;
 
 internal class WorkingWithFile
 {
-    private string PathToData { get; set; } = "C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\";
+    private string PathToData { get; set; } = "C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\list\\";
     
     public async Task WriteListToFile(string option, List<Graph> graphs)
     {
@@ -40,6 +40,7 @@ internal class WorkingWithFile
             }
         }
     }
+
 
     public async Task<Graph> ReadDataFromFileAsync(string path)
     {
@@ -81,6 +82,8 @@ internal class WorkingWithFile
             return null;
         }
     }
+
+
 
     private List<Vertex> AddingVertex(Vertex vertex, Vertex vertex1, List<Vertex> vertices)
     {
