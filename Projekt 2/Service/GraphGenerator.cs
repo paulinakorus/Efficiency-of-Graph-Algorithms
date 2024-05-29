@@ -23,7 +23,7 @@ internal class GraphGenerator
         return graphs;
     }
 
-    public Graph GenerateRandomGraph(int numberOfVertices, double density)
+    private Graph GenerateRandomGraph(int numberOfVertices, double density)
     {
         List<Vertex> vertices = GenerateVertices(numberOfVertices);
         List<Edge> edges = GenerateEdges(vertices, density);

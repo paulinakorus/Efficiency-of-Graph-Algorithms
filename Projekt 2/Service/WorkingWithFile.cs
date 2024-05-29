@@ -10,7 +10,19 @@ namespace Projekt_2.Service;
 internal class WorkingWithFile
 {
     private string PathToData { get; set; } = "C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\";
-    public async Task WriteDataToFile(string option, Graph graph)
+    
+    public async Task WriteListToFile(string option, List<Graph> graphs)
+    {
+        List<Task> tasks = new List<Task>();
+        foreach (var graph in graphs)
+        {
+             tasks.Add(WriteDataToFile(option, graph));
+        }
+        await Task.WhenAll(tasks);
+        Console.WriteLine(option);
+    }
+    
+    private async Task WriteDataToFile(string option, Graph graph)
     {
         string meddiumPath = Path.Combine(PathToData, option);
         var files = Directory.GetFiles(meddiumPath);
