@@ -235,4 +235,140 @@ internal class Algorithms
 
         return mst;
     }
+
+    public List<Edge> KruskalMatrix(Graph graph)
+    {
+        MatrixGraph matrixGraph = new MatrixGraph();
+        var adjacencyMatrix = matrixGraph.AdjacencyMatrix(graph);
+        var vertices = graph.Vertices;
+
+        List<Edge> result = new List<Edge>();
+        int numVertices = vertices.Count;
+        UnionFind unionFind = new UnionFind(numVertices);
+
+        // Lista wszystkich możliwych krawędzi w grafie
+        List<Edge> allEdges = GetAllEdges(adjacencyMatrix, vertices);
+
+        // Sortowanie krawędzi według wag
+        allEdges.Sort((a, b) => a.Weight.CompareTo(b.Weight));
+
+        foreach (var edge in allEdges)
+        {
+            int sourceIndex = edge.Source.Id;
+            int destinationIndex = edge.Destination.Id;
+
+            // Sprawdzamy, czy dodanie krawędzi spowoduje cykl
+            if (!unionFind.Connected(sourceIndex, destinationIndex))
+            {
+                unionFind.Union(sourceIndex, destinationIndex);
+                result.Add(edge);
+            }
+        }
+
+        return result;
+    }
+
+    private List<Edge> GetAllEdges(int[,] adjacencyMatrix, List<Vertex> vertices)
+    {
+        List<Edge> allEdges = new List<Edge>();
+        int numVertices = vertices.Count;
+
+        for (int i = 0; i < numVertices; i++)
+        {
+            for (int j = i + 1; j < numVertices; j++)
+            {
+                if (adjacencyMatrix[i, j] != 0)
+                {
+                    Vertex source = vertices[i];
+                    Vertex destination = vertices[j];
+                    int weight = adjacencyMatrix[i, j];
+                    Edge edge = new Edge(source, destination, weight);
+                    allEdges.Add(edge);
+                }
+            }
+        }
+
+        Console.WriteLine("Minimum Spanning Tree (edges and their weights):");
+        foreach (var edge in allEdges)
+        {
+            Console.WriteLine($"Source: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
+        }
+
+        return allEdges;
+    }
+
+    public int FordFulkersonMatrix(Graph graph)
+    {
+        MatrixGraph matrixGraph = new MatrixGraph();
+        var capacities = matrixGraph.AdjacencyMatrix(graph);
+        var source = graph.Vertices.First().Id;
+        var sink = graph.Vertices.Last().Id;
+
+        int numVertices = capacities.GetLength(0);
+        int[,] residualGraph = new int[numVertices, numVertices];
+
+        // Inicjalizacja grafu rezydualnego
+        for (int i = 0; i < numVertices; i++)
+        {
+            for (int j = 0; j < numVertices; j++)
+            {
+                residualGraph[i, j] = capacities[i, j];
+            }
+        }
+
+        int[] parent = new int[numVertices];
+        int maxFlow = 0;
+
+        // Dopóki istnieje ścieżka powiększająca od źródła do ujścia
+        while (BFS(residualGraph, source, sink, parent))
+        {
+            // Znajdź minimalny przepływ na ścieżce powiększającej
+            int minCapacity = int.MaxValue;
+            for (int v = sink; v != source; v = parent[v])
+            {
+                int u = parent[v];
+                minCapacity = Math.Min(minCapacity, residualGraph[u, v]);
+            }
+
+            // Aktualizuj przepustowość krawędzi w grafie rezydualnym
+            for (int v = sink; v != source; v = parent[v])
+            {
+                int u = parent[v];
+                residualGraph[u, v] -= minCapacity;
+                residualGraph[v, u] += minCapacity;
+            }
+
+            maxFlow += minCapacity;
+        }
+        Console.WriteLine("Maksymalny przepływ z wierzchołka " + source + " (źródło) do wierzchołka " + sink + " (ujście) wynosi: " + maxFlow);
+        return maxFlow;
+    }
+
+    private bool BFS(int[,] residualGraph, int source, int sink, int[] parent)
+    {
+        int numVertices = residualGraph.GetLength(0);
+        bool[] visited = new bool[numVertices];
+        Queue<int> queue = new Queue<int>();
+
+        queue.Enqueue(source);
+        visited[source] = true;
+        parent[source] = -1;
+
+        while (queue.Count > 0)
+        {
+            int u = queue.Dequeue();
+
+            for (int v = 0; v < numVertices; v++)
+            {
+                if (!visited[v] && residualGraph[u, v] > 0)
+                {
+                    queue.Enqueue(v);
+                    parent[v] = u;
+                    visited[v] = true;
+                }
+            }
+        }
+
+        return visited[sink];
+    }
 }

@@ -51,7 +51,7 @@ namespace Projekt_2
             //ListGraph listGraph = new ListGraph();
             //var list = listGraph.GetPredecessors(graph);
 
-            algorithms.PrimMatrix(graph);
+            algorithms.FordFulkersonMatrix(graph);
             
         }
     }
