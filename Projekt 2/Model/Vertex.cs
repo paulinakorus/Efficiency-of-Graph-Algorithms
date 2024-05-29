@@ -9,10 +9,8 @@ namespace Projekt_2.Model;
 internal class Vertex
 {
     public int Id { get; set; }
-    public int Weight { get; set; }
-    public Vertex(int id, int weight)
+    public Vertex(int id)
     {
         Id = id;
-        Weight = weight;
     }
 }

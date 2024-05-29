@@ -10,7 +10,7 @@ namespace Projekt_2
             DirectoryFolder directoryFolder = new DirectoryFolder();
             //await directoryFolder.GeneratingGraphsAndWritingToFileAsync();
             WorkingWithFile workingWithFile = new WorkingWithFile();
-            var graph = await workingWithFile.ReadDataFromFileAsync("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\undirected\\25%\\20\\0.txt");
+            var graph = await workingWithFile.ReadDataFromFileAsync("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\directed\\25%\\20\\0.txt");
             MatrixGraph matrix = new MatrixGraph();
             //var ma = matrix.AdjacencyMatrix(graph);
             
@@ -20,11 +20,11 @@ namespace Projekt_2
 
 
             
-            Vertex v0 = new Vertex(0, int.MaxValue);
-            Vertex v1 = new Vertex(1, int.MaxValue);
-            Vertex v2 = new Vertex(2, int.MaxValue);
-            Vertex v3 = new Vertex(3, int.MaxValue);
-            Vertex v4 = new Vertex(4, int.MaxValue);
+            Vertex v0 = new Vertex(0);
+            Vertex v1 = new Vertex(1);
+            Vertex v2 = new Vertex(2);
+            Vertex v3 = new Vertex(3);
+            Vertex v4 = new Vertex(4);
             List<Vertex> vertices = new List<Vertex>{ v0, v1, v2, v3, v4 };
 
             Edge e01 = new Edge(v0, v1, 10);
@@ -51,7 +51,7 @@ namespace Projekt_2
             //ListGraph listGraph = new ListGraph();
             //var list = listGraph.GetPredecessors(graph);
 
-            algorithms.BellmanFordMatrix(graph);
+            algorithms.PrimMatrix(graph);
             
         }
     }

@@ -66,8 +66,8 @@ internal class WorkingWithFile
                 {
                     var line = await reader.ReadLineAsync().ConfigureAwait(false);
                     var splittedLine = line.Split(" ");
-                    var source = new Vertex(int.Parse(splittedLine[0]), int.MaxValue);
-                    var destination = new Vertex(int.Parse(splittedLine[1]), int.MaxValue);
+                    var source = new Vertex(int.Parse(splittedLine[0]));
+                    var destination = new Vertex(int.Parse(splittedLine[1]));
                     verticesList = AddingVertex(source, destination, verticesList);
 
                     var edge = new Edge(source, destination, int.Parse(splittedLine[2]));

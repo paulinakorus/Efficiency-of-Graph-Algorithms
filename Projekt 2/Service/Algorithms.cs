@@ -178,4 +178,61 @@ internal class Algorithms
         }
         return distances;
     }
+
+    public List<Edge> PrimMatrix(Graph graph)
+    {
+        MatrixGraph matrixGraph = new MatrixGraph();
+        var adjacencyMatrix = matrixGraph.AdjacencyMatrix(graph);
+
+        int numVertices = adjacencyMatrix.GetLength(0);
+        bool[] visited = new bool[numVertices];
+        List<Edge> mst = new List<Edge>();
+
+        // Start from the first vertex
+        visited[0] = true;
+
+        while (mst.Count < numVertices - 1)
+        {
+            int minWeight = int.MaxValue;
+            Vertex nullVertex = new Vertex(-1);
+            Edge minEdge = new Edge(nullVertex, nullVertex, int.MaxValue);
+
+            // Find the minimum weight edge
+            for (int i = 0; i < numVertices; i++)
+            {
+                if (visited[i])
+                {
+                    for (int j = 0; j < numVertices; j++)
+                    {
+                        if (!visited[j] && adjacencyMatrix[i, j] != 0 && adjacencyMatrix[i, j] < minWeight)
+                        {
+                            Vertex vertexI = new Vertex(i);
+                            Vertex vertexJ = new Vertex(j);
+                            minEdge = new Edge(vertexI, vertexJ, adjacencyMatrix[i, j]);
+                            minWeight = adjacencyMatrix[i, j];
+                        }
+                    }
+                }
+            }
+
+            if (minEdge.Source.Id == -1 || minEdge.Destination.Id == -1)
+            {
+                throw new Exception("Graph is not connected.");
+            }
+
+            // Mark the destination vertex as visited
+            visited[minEdge.Destination.Id] = true;
+
+            // Add the minimum weight edge to the minimum spanning tree
+            mst.Add(minEdge);
+        }
+
+        Console.WriteLine("Minimum Spanning Tree (edges and their weights):");
+        foreach (var edge in mst)
+        {
+            Console.WriteLine($"Source: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
+        }
+
+        return mst;
+    }
 }
