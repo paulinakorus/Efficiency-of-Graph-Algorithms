@@ -33,7 +33,7 @@ internal class GraphGenerator
     private List<Vertex> GenerateVertices(int numberOfVertices)
     {
         List<Vertex> vertices = Enumerable.Range(0, numberOfVertices)
-                                           .Select(i => new Vertex(i, 0))
+                                           .Select(i => new Vertex(i, int.MaxValue))
                                            .ToList();
         return vertices;
     }

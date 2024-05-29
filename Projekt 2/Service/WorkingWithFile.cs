@@ -41,7 +41,7 @@ internal class WorkingWithFile
         }
     }
 
-    public async Task<Graph> ReadDataFromFile(string path)
+    public async Task<Graph> ReadDataFromFileAsync(string path)
     {
         using (var reader = new StreamReader(File.OpenRead(path)))
         {
@@ -65,8 +65,8 @@ internal class WorkingWithFile
                 {
                     var line = await reader.ReadLineAsync().ConfigureAwait(false);
                     var splittedLine = line.Split(" ");
-                    var source = new Vertex(int.Parse(splittedLine[0]), 0);
-                    var destination = new Vertex(int.Parse(splittedLine[1]), 0);
+                    var source = new Vertex(int.Parse(splittedLine[0]), int.MaxValue);
+                    var destination = new Vertex(int.Parse(splittedLine[1]), int.MaxValue);
                     verticesList = AddingVertex(source, destination, verticesList);
 
                     var edge = new Edge(source, destination, int.Parse(splittedLine[2]));
