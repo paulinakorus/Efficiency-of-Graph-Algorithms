@@ -16,8 +16,8 @@ internal class MatrixAlgorithms
         MatrixGraph matrixGraph = new MatrixGraph();
         matrixGraph.GeneratingMatrix(graph);
         var matrixExample = matrixGraph.MatrixExample;
-        Uploading uploading = new Uploading();
-        uploading.UploadMatrixGraph(graph);
+        Display uploading = new Display();
+        uploading.DisplayMatrixGraph(graph);
 
         int nVertices = matrixExample.GetLength(0);
 

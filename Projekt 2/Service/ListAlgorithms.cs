@@ -15,8 +15,8 @@ internal class ListAlgorithms
         ListGraph listGraph = new ListGraph();
         listGraph.GeneratingList(graph);
         var matrixExample = listGraph.ListExample;
-        Uploading uploading = new Uploading();
-        uploading.UploadMatrixGraph(graph);
+        Display uploading = new Display();
+        uploading.DisplayMatrixGraph(graph);
 
         int nVertices = matrixExample.GetLength(0);
 

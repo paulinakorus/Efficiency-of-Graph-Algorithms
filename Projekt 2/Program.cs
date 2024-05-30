@@ -8,10 +8,16 @@ namespace Projekt_2
     {
         static async Task Main(string[] args)
         {
+            Menu menu = new Menu();
+            menu.GeneratorMenu();
+            
+            /*
             DirectoryFolder directoryFolder = new DirectoryFolder();
-            await directoryFolder.GeneratingGraphsAndWritingToFileAsync();
+            //await directoryFolder.GeneratingGraphsAndWritingToFileAsync();
             WorkingWithFile workingWithFile = new WorkingWithFile();
             var graph = await workingWithFile.ReadDataFromFileAsync("C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\undirected\\25%\\10\\0.txt");
+
+            
 
             //var ma = matrix.AdjacencyMatrix(graph);
 
@@ -37,13 +43,12 @@ namespace Projekt_2
 
             List<Edge> edges = new List<Edge> { e01, e03, e04, e05, e06, e07 };
 
-            /*
-             *
+            
             Uploading uploading = new Uploading();
             uploading.UploadListGraph(graph1);
             uploading.UploadMatrixGraph(graph1);
             ListGraph matrixList = new ListGraph();
-            */
+            
 
             Graph graph1 = new Graph(vertices, edges);
 
@@ -56,6 +61,7 @@ namespace Projekt_2
 
             matrixAlgorithms.FordFulkersonMatrix(graph1);
             listAlgorithms.FordFulkersonList(graph1);
+            */
         }
     }
 }
