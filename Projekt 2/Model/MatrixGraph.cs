@@ -10,7 +10,7 @@ internal class MatrixGraph
 {
     public int[,] MatrixExample { get; set; }
 
-    public int[,] AdjacencyMatrix(Graph graph)
+    public int[,] GeneratingMatrix(Graph graph)
     {
         int numVertices = graph.Vertices.Count;
         MatrixExample = new int[numVertices, numVertices];

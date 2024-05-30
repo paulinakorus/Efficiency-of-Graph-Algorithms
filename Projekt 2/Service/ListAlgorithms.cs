@@ -1,6 +1,5 @@
 ﻿using Projekt_2.Model;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Projekt_2.Service;
 
-internal class Algorithms
+internal class ListAlgorithms
 {
-    public int[] DijkstraMatrix(Graph graph, Vertex vertex)
+    public int[] DijkstraList(Graph graph, Vertex vertex)
     {
         var startVertex = vertex.Id;
-        MatrixGraph matrixGraph = new MatrixGraph();
-        matrixGraph.AdjacencyMatrix(graph);
-        var matrixExample = matrixGraph.MatrixExample;
+        ListGraph listGraph = new ListGraph();
+        listGraph.GeneratingList(graph);
+        var matrixExample = listGraph.ListExample;
         Uploading uploading = new Uploading();
         uploading.UploadMatrixGraph(graph);
 
@@ -78,66 +77,10 @@ internal class Algorithms
         return shortestDistances;
     }
 
-    /*public Dictionary<Vertex, int> DijkstraList (Graph graph, Vertex startVertex)
+    public List<int> BellmanFordList(Graph graph)
     {
         ListGraph listGraph = new ListGraph();
-        var graphList = listGraph.AdjacencyList(graph);
-
-        var distances = new Dictionary<Vertex, int>();
-        var priorityQueue = new SortedSet<(int distance, Vertex vertex)>();
-
-        foreach (var vertex in graphList.Keys)
-        {
-            distances[vertex] = int.MaxValue;
-        }
-
-        distances[startVertex] = 0;
-        priorityQueue.Add((0, startVertex));
-
-        while (priorityQueue.Count > 0)
-        {
-            var (currentDistance, currentVertex) = priorityQueue.Min;
-            priorityQueue.Remove(priorityQueue.Min);
-
-            foreach (var neighbor in graphList[currentVertex])
-            {
-                var edgeWeight = GetEdgeWeight(graph.Edges, currentVertex, neighbor);
-                var newDist = currentDistance + edgeWeight;
-
-                if (newDist < distances[neighbor])
-                {
-                    priorityQueue.Remove((distances[neighbor], neighbor));
-                    distances[neighbor] = newDist;
-                    priorityQueue.Add((newDist, neighbor));
-                }
-            }
-        }
-
-        Console.WriteLine("Najkrótsze odległości od wierzchołka początkowego:");
-        foreach (var vertex in distances.Keys)
-        {
-            Console.WriteLine($"Wierzchołek {vertex.Id}: {distances[vertex]}");
-        }
-
-        return distances;
-    }
-
-    private int GetEdgeWeight(List<Edge> edges, Vertex source, Vertex destination)
-    {
-        foreach (var edge in edges)
-        {
-            if (edge.Source.Equals(source) && edge.Destination.Equals(destination))
-            {
-                return edge.Weight;
-            }
-        }
-        return int.MaxValue; // W przypadku gdy krawędź nie istnieje, zwróć maksymalną wartość
-    }*/
-
-    public List<int> BellmanFordMatrix(Graph graph)
-    {
-        MatrixGraph matrixGraph = new MatrixGraph();
-        var adjacencyMatrix = matrixGraph.AdjacencyMatrix(graph);
+        var adjacencyMatrix = listGraph.GeneratingList(graph);
         var source = graph.Vertices.First().Id;
 
         int numVertices = adjacencyMatrix.GetLength(0);
@@ -179,10 +122,10 @@ internal class Algorithms
         return distances;
     }
 
-    public List<Edge> PrimMatrix(Graph graph)
+    public List<Edge> PrimList(Graph graph)
     {
-        MatrixGraph matrixGraph = new MatrixGraph();
-        var adjacencyMatrix = matrixGraph.AdjacencyMatrix(graph);
+        ListGraph listGraph = new ListGraph();
+        var adjacencyMatrix = listGraph.GeneratingList(graph);
 
         int numVertices = adjacencyMatrix.GetLength(0);
         bool[] visited = new bool[numVertices];
@@ -236,10 +179,10 @@ internal class Algorithms
         return mst;
     }
 
-    public List<Edge> KruskalMatrix(Graph graph)
+    public List<Edge> KruskalList(Graph graph)
     {
-        MatrixGraph matrixGraph = new MatrixGraph();
-        var adjacencyMatrix = matrixGraph.AdjacencyMatrix(graph);
+        ListGraph listGraph = new ListGraph();
+        var adjacencyMatrix = listGraph.GeneratingList(graph);
         var vertices = graph.Vertices;
 
         List<Edge> result = new List<Edge>();
@@ -268,7 +211,7 @@ internal class Algorithms
         return result;
     }
 
-    private List<Edge> GetAllEdges(int[,] adjacencyMatrix, List<Vertex> vertices)
+    private List<Edge> GetAllEdges(int[,] adjacencyList, List<Vertex> vertices)
     {
         List<Edge> allEdges = new List<Edge>();
         int numVertices = vertices.Count;
@@ -277,11 +220,11 @@ internal class Algorithms
         {
             for (int j = i + 1; j < numVertices; j++)
             {
-                if (adjacencyMatrix[i, j] != 0)
+                if (adjacencyList[i, j] != 0)
                 {
                     Vertex source = vertices[i];
                     Vertex destination = vertices[j];
-                    int weight = adjacencyMatrix[i, j];
+                    int weight = adjacencyList[i, j];
                     Edge edge = new Edge(source, destination, weight);
                     allEdges.Add(edge);
                 }
@@ -297,10 +240,10 @@ internal class Algorithms
         return allEdges;
     }
 
-    public int FordFulkersonMatrix(Graph graph)
+    public int FordFulkersonList(Graph graph)
     {
-        MatrixGraph matrixGraph = new MatrixGraph();
-        var capacities = matrixGraph.AdjacencyMatrix(graph);
+        ListGraph listGraph = new ListGraph();
+        var capacities = listGraph.GeneratingList(graph);
         var source = graph.Vertices.First().Id;
         var sink = graph.Vertices.Last().Id;
 
@@ -371,4 +314,5 @@ internal class Algorithms
 
         return visited[sink];
     }
+
 }

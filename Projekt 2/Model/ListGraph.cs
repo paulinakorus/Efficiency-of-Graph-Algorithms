@@ -8,9 +8,9 @@ namespace Projekt_2.Model;
 
 internal class ListGraph
 {
-    //public int[,] ListExample { get; set; }
+    public int[,] ListExample { get; set; }
 
-    /*public int[,] AdjacencyList(Graph graph)
+    public int[,] GeneratingList(Graph graph)
     {
         int numVertices = graph.Vertices.Count;
         ListExample = new int[numVertices, numVertices];
@@ -34,50 +34,44 @@ internal class ListGraph
             // Matrix[destinationIndex, sourceIndex] = 1;
         }
         return ListExample;
-    }*/
+    }
 
-    Dictionary<Vertex, List<Vertex>> ListExample = new Dictionary<Vertex, List<Vertex>>();
-    public Dictionary<Vertex, List<Vertex>> GetPredecessors(Graph graph)
+    /*
+     * public Dictionary<int, List<int>> GeneratingList(Graph graph)
     {
-        var startVertex = graph.Vertices.First();
-        // Inicjalizacja listy odwiedzonych wierzchołków i kolejki BFS
-        var visited = new HashSet<Vertex>();
-        var queue = new Queue<Vertex>();
-        queue.Enqueue(startVertex);
+        Dictionary<int, List<int>> adjacencyList = new Dictionary<int, List<int>>();
 
-        // Inicjalizacja listy poprzedników
-        ListExample[startVertex] = null;
-
-        while (queue.Count > 0)
+        // Inicjalizujemy listę sąsiedztwa dla każdego wierzchołka
+        foreach (var vertex in graph.Vertices)
         {
-            // Pobranie wierzchołka z kolejki
-            var vertex = queue.Dequeue();
+            adjacencyList[vertex.Id] = new List<int>();
+        }
 
-            // Jeśli wierzchołek nie był jeszcze odwiedzony
-            if (!visited.Contains(vertex))
+        // Przechodzimy przez każdą krawędź
+        foreach (var edge in graph.Edges)
+        {
+            // Dodajemy krawędź do listy sąsiedztwa tylko jeśli jej źródło znajduje się w wierzchołkach grafu
+            if (adjacencyList.ContainsKey(edge.Source.Id))
             {
-                // Dodanie go do listy odwiedzonych
-                visited.Add(vertex);
-
-                // Przetworzenie sąsiadów wierzchołka
-                foreach (var neighbor in graph.GetNeighbors(vertex))
-                {
-                    if (!visited.Contains(neighbor))
-                    {
-                        // Dodanie sąsiada do kolejki
-                        queue.Enqueue(neighbor);
-
-                        // Dodanie informacji o poprzedniku
-                        if (!ListExample.ContainsKey(neighbor))
-                        {
-                            ListExample[neighbor] = new List<Vertex>();
-                        }
-                        ListExample[neighbor].Add(vertex);
-                    }
-                }
+                adjacencyList[edge.Source.Id].Add(edge.Destination.Id);
+            }
+            else
+            {
+                // Jeśli źródło krawędzi nie znajduje się w wierzchołkach grafu, zgłaszamy błąd
+                throw new ArgumentException("Invalid edge source vertex.");
             }
         }
 
-        return ListExample;
-    }
+        foreach (var kvp in adjacencyList)
+        {
+            Console.Write($"Następnicy dla wierzchołka {kvp.Key}: ");
+            foreach (var neighbor in kvp.Value)
+            {
+                Console.Write($"{neighbor} ");
+            }
+            Console.WriteLine();
+        }
+
+        return adjacencyList;
+    }*/
 }

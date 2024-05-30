@@ -21,7 +21,7 @@ internal class Uploading
     public void UploadMatrixGraph(Graph graph)
     {
         MatrixGraph matrix = new MatrixGraph();
-        matrix.AdjacencyMatrix(graph);
+        matrix.GeneratingMatrix(graph);
         var matrixExample = matrix.MatrixExample;
         var len = graph.Vertices.Count;
 
