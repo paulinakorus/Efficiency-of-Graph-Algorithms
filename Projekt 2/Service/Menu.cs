@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Projekt_2.Model;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,7 +117,6 @@ internal class Menu
             {
                 Console.WriteLine("Wrong path. Try again, please\n");
                 wrongPath = true;
-                break;
             }
         }
     }
@@ -143,16 +144,15 @@ internal class Menu
 
                 while (wrongRepresentation) 
                 {
-                    if (representation == "list")
+                    if (representation == "list" || representation == "matrix")
                     {
-                        ListAlgorithms listAlgorithms = new ListAlgorithms();
                         var algorithmsOptions = new (string key, Action action)[]
                         {
-                            ("Prim", () => listAlgorithms.PrimList(graph)),
-                            ("Kruskal", () => listAlgorithms.KruskalList(graph)),
-                            ("Dijkstra", () => ),
-                            ("Ford-Bellman", () => ),
-                            ("Ford-Fulkerson", () => )
+                            ("Prim", () => PrimAlgorithm(graph, representation)),
+                            ("Kruskal", () => KruskalAlgorithm(graph, representation)),
+                            ("Dijkstra", () => DijkstraAlgorithm(graph, representation)),
+                            ("Ford-Bellman", () => FordBellmanAlgorithm(graph, representation)),
+                            ("Ford-Fulkerson", () => FordFulkersonAlgorithm(graph, representation))
                         };
 
                         var action = algorithmsOptions.Where(x => x.key == algorithm).FirstOrDefault().action;
@@ -160,28 +160,6 @@ internal class Menu
                         {
                             action();
                         }
-
-                        wrongRepresentation = false;
-                    } 
-                    else if (representation == "matrix")
-                    {
-                        MatrixAlgorithms matrixAlgorithms = new MatrixAlgorithms();
-
-                        var algorithmsOptions = new (string key, Action action)[]
-                        {
-                            ("Prim", () => ),
-                            ("Kruskal", () => ),
-                            ("Dijkstra", () => ),
-                            ("Ford-Bellman", () => ),
-                            ("Ford-Fulkerson", () => )
-                        };
-
-                        var action = algorithmsOptions.Where(x => x.key == algorithm).FirstOrDefault().action;
-                        if (action != null)
-                        {
-                            action();
-                        }
-
                         wrongRepresentation = false;
                     }
                     else
@@ -197,8 +175,147 @@ internal class Menu
             {
                 Console.WriteLine("Wrong path. Try again, please\n");
                 wrongPath = true;
-                break;
             }
         }
+    }
+
+    private void PrimAlgorithm(Graph graph, string representation)
+    {
+        MatrixAlgorithms matrixAlgorithms = new MatrixAlgorithms();
+        ListAlgorithms listAlgorithms = new ListAlgorithms();
+        var stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
+        List <Edge> result = new List<Edge>();
+
+        if (representation == "matrix")
+        {
+            stopwatch.Start();
+            result = matrixAlgorithms.PrimMatrix(graph);
+            stopwatch.Stop();
+        }else
+        {
+            stopwatch.Start();
+            result = listAlgorithms.PrimList(graph);
+            stopwatch.Stop();
+        }
+
+        Console.WriteLine("\nThe Prim's Algorithm");
+        foreach (var edge in result)
+        {
+            Console.WriteLine($"\tSource: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
+        }
+        Console.WriteLine("Time: " + stopwatch.Elapsed.Microseconds + " ms");
+    }
+
+    private void KruskalAlgorithm(Graph graph, string representation)
+    {
+        MatrixAlgorithms matrixAlgorithms = new MatrixAlgorithms();
+        ListAlgorithms listAlgorithms = new ListAlgorithms();
+        var stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
+        List<Edge> result = new List<Edge>();
+
+        if (representation == "matrix")
+        {
+            stopwatch.Start();
+            result = matrixAlgorithms.KruskalMatrix(graph);
+            stopwatch.Stop();
+        }
+        else
+        {
+            stopwatch.Start();
+            result = listAlgorithms.KruskalList(graph);
+            stopwatch.Stop();
+        }
+
+        Console.WriteLine("\nThe Kruskal's Algorithm");
+        foreach (var edge in result)
+        {
+            Console.WriteLine($"\tSource: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
+        }
+        Console.WriteLine("Time: " + stopwatch.Elapsed.Microseconds + " ms");
+    }
+
+    private void DijkstraAlgorithm(Graph graph, string representation)
+    {
+        MatrixAlgorithms matrixAlgorithms = new MatrixAlgorithms();
+        ListAlgorithms listAlgorithms = new ListAlgorithms();
+        var stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
+        int[] result;
+
+        if (representation == "matrix")
+        {
+            stopwatch.Start();
+            result = matrixAlgorithms.DijkstraMatrix(graph);
+            stopwatch.Stop();
+        }
+        else
+        {
+            stopwatch.Start();
+            result = listAlgorithms.DijkstraList(graph);
+            stopwatch.Stop();
+        }
+
+        Console.WriteLine("\nThe Dijkstra's Algorithm");
+        for (int i = 0; i < result.Length; i++)
+        {
+            Console.WriteLine($"\tVertex {i}: {result[i]}");
+        }
+        Console.WriteLine("Time: " + stopwatch.Elapsed.Microseconds + " ms");
+    }
+
+    private void FordBellmanAlgorithm(Graph graph, string representation)
+    {
+        MatrixAlgorithms matrixAlgorithms = new MatrixAlgorithms();
+        ListAlgorithms listAlgorithms = new ListAlgorithms();
+        var stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
+        List<int> result = new List<int>();
+
+        if (representation == "matrix")
+        {
+            stopwatch.Start();
+            result = matrixAlgorithms.BellmanFordMatrix(graph);
+            stopwatch.Stop();
+        }
+        else
+        {
+            stopwatch.Start();
+            result = listAlgorithms.BellmanFordList(graph);
+            stopwatch.Stop();
+        }
+
+        Console.WriteLine("\nThe Ford-Bellman's Algorithm");
+        for (int i = 0; i < result.Count; i++)
+        {
+            Console.WriteLine($"\tVertex {i}: {result[i]}");
+        }
+        Console.WriteLine("Time: " + stopwatch.Elapsed.Microseconds + " ms");
+    }
+
+    private void FordFulkersonAlgorithm(Graph graph, string representation)
+    {
+        MatrixAlgorithms matrixAlgorithms = new MatrixAlgorithms();
+        ListAlgorithms listAlgorithms = new ListAlgorithms();
+        var stopwatch = Stopwatch.StartNew();
+        stopwatch.Restart();
+        int result;
+
+        if (representation == "matrix")
+        {
+            stopwatch.Start();
+            result = matrixAlgorithms.FordFulkersonMatrix(graph);
+            stopwatch.Stop();
+        }
+        else
+        {
+            stopwatch.Start();
+            result = listAlgorithms.FordFulkersonList(graph);
+            stopwatch.Stop();
+        }
+        Console.WriteLine("\nThe Ford-Fulkerson's Algorithm");
+        Console.WriteLine("\tmaximum flow: " + result);
+        Console.WriteLine("Time: " + stopwatch.Elapsed.Microseconds + " ms");
     }
 }

@@ -9,14 +9,13 @@ namespace Projekt_2.Service;
 
 internal class ListAlgorithms
 {
-    public int[] DijkstraList(Graph graph, Vertex vertex)
+    public int[] DijkstraList(Graph graph)
     {
+        Vertex vertex = graph.Vertices[0];
         var startVertex = vertex.Id;
         ListGraph listGraph = new ListGraph();
         listGraph.GeneratingList(graph);
         var matrixExample = listGraph.ListExample;
-        Display uploading = new Display();
-        uploading.DisplayMatrixGraph(graph);
 
         int nVertices = matrixExample.GetLength(0);
 
@@ -68,12 +67,6 @@ internal class ListAlgorithms
                 }
             }
         }
-
-        Console.WriteLine("Najkrótsze odległości od wierzchołka początkowego:");
-        for (int i = 0; i < shortestDistances.Length; i++)
-        {
-            Console.WriteLine($"Wierzchołek {i}: {shortestDistances[i]}");
-        }
         return shortestDistances;
     }
 
@@ -112,12 +105,6 @@ internal class ListAlgorithms
                     throw new InvalidOperationException("Graf zawiera cykl ujemny");
                 }
             }
-        }
-
-        Console.WriteLine("Najkrótsze odległości od wierzchołka początkowego:");
-        for (int i = 0; i < distances.Count; i++)
-        {
-            Console.WriteLine($"Wierzchołek {i}: {distances[i]}");
         }
         return distances;
     }
@@ -169,13 +156,6 @@ internal class ListAlgorithms
             // Add the minimum weight edge to the minimum spanning tree
             mst.Add(minEdge);
         }
-
-        Console.WriteLine("Minimum Spanning Tree (edges and their weights):");
-        foreach (var edge in mst)
-        {
-            Console.WriteLine($"Source: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
-        }
-
         return mst;
     }
 
@@ -230,13 +210,6 @@ internal class ListAlgorithms
                 }
             }
         }
-
-        Console.WriteLine("Minimum Spanning Tree (edges and their weights):");
-        foreach (var edge in allEdges)
-        {
-            Console.WriteLine($"Source: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
-        }
-
         return allEdges;
     }
 
@@ -283,7 +256,6 @@ internal class ListAlgorithms
 
             maxFlow += minCapacity;
         }
-        Console.WriteLine("Maksymalny przepływ z wierzchołka " + source + " (źródło) do wierzchołka " + sink + " (ujście) wynosi: " + maxFlow);
         return maxFlow;
     }
 
@@ -311,8 +283,6 @@ internal class ListAlgorithms
                 }
             }
         }
-
         return visited[sink];
     }
-
 }

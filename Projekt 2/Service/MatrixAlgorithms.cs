@@ -10,14 +10,13 @@ namespace Projekt_2.Service;
 
 internal class MatrixAlgorithms
 {
-    public int[] DijkstraMatrix(Graph graph, Vertex vertex)
+    public int[] DijkstraMatrix(Graph graph)
     {
+        Vertex vertex = graph.Vertices[0];
         var startVertex = vertex.Id;
         MatrixGraph matrixGraph = new MatrixGraph();
         matrixGraph.GeneratingMatrix(graph);
         var matrixExample = matrixGraph.MatrixExample;
-        Display uploading = new Display();
-        uploading.DisplayMatrixGraph(graph);
 
         int nVertices = matrixExample.GetLength(0);
 
@@ -69,71 +68,8 @@ internal class MatrixAlgorithms
                 }
             }
         }
-
-        Console.WriteLine("Najkrótsze odległości od wierzchołka początkowego:");
-        for (int i = 0; i < shortestDistances.Length; i++)
-        {
-            Console.WriteLine($"Wierzchołek {i}: {shortestDistances[i]}");
-        }
         return shortestDistances;
     }
-
-    /*public Dictionary<Vertex, int> DijkstraList (Graph graph, Vertex startVertex)
-    {
-        ListGraph listGraph = new ListGraph();
-        var graphList = listGraph.AdjacencyList(graph);
-
-        var distances = new Dictionary<Vertex, int>();
-        var priorityQueue = new SortedSet<(int distance, Vertex vertex)>();
-
-        foreach (var vertex in graphList.Keys)
-        {
-            distances[vertex] = int.MaxValue;
-        }
-
-        distances[startVertex] = 0;
-        priorityQueue.Add((0, startVertex));
-
-        while (priorityQueue.Count > 0)
-        {
-            var (currentDistance, currentVertex) = priorityQueue.Min;
-            priorityQueue.Remove(priorityQueue.Min);
-
-            foreach (var neighbor in graphList[currentVertex])
-            {
-                var edgeWeight = GetEdgeWeight(graph.Edges, currentVertex, neighbor);
-                var newDist = currentDistance + edgeWeight;
-
-                if (newDist < distances[neighbor])
-                {
-                    priorityQueue.Remove((distances[neighbor], neighbor));
-                    distances[neighbor] = newDist;
-                    priorityQueue.Add((newDist, neighbor));
-                }
-            }
-        }
-
-        Console.WriteLine("Najkrótsze odległości od wierzchołka początkowego:");
-        foreach (var vertex in distances.Keys)
-        {
-            Console.WriteLine($"Wierzchołek {vertex.Id}: {distances[vertex]}");
-        }
-
-        return distances;
-    }
-
-    private int GetEdgeWeight(List<Edge> edges, Vertex source, Vertex destination)
-    {
-        foreach (var edge in edges)
-        {
-            if (edge.Source.Equals(source) && edge.Destination.Equals(destination))
-            {
-                return edge.Weight;
-            }
-        }
-        return int.MaxValue; // W przypadku gdy krawędź nie istnieje, zwróć maksymalną wartość
-    }*/
-
     public List<int> BellmanFordMatrix(Graph graph)
     {
         MatrixGraph matrixGraph = new MatrixGraph();
@@ -169,12 +105,6 @@ internal class MatrixAlgorithms
                     throw new InvalidOperationException("Graf zawiera cykl ujemny");
                 }
             }
-        }
-
-        Console.WriteLine("Najkrótsze odległości od wierzchołka początkowego:");
-        for (int i = 0; i < distances.Count; i++)
-        {
-            Console.WriteLine($"Wierzchołek {i}: {distances[i]}");
         }
         return distances;
     }
@@ -226,13 +156,6 @@ internal class MatrixAlgorithms
             // Add the minimum weight edge to the minimum spanning tree
             mst.Add(minEdge);
         }
-
-        Console.WriteLine("Minimum Spanning Tree (edges and their weights):");
-        foreach (var edge in mst)
-        {
-            Console.WriteLine($"Source: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
-        }
-
         return mst;
     }
 
@@ -264,7 +187,6 @@ internal class MatrixAlgorithms
                 result.Add(edge);
             }
         }
-
         return result;
     }
 
@@ -287,13 +209,6 @@ internal class MatrixAlgorithms
                 }
             }
         }
-
-        Console.WriteLine("Minimum Spanning Tree (edges and their weights):");
-        foreach (var edge in allEdges)
-        {
-            Console.WriteLine($"Source: {edge.Source.Id} Destination: {edge.Destination.Id} Weight: {edge.Weight}");
-        }
-
         return allEdges;
     }
 
@@ -340,7 +255,6 @@ internal class MatrixAlgorithms
 
             maxFlow += minCapacity;
         }
-        Console.WriteLine("Maksymalny przepływ z wierzchołka " + source + " (źródło) do wierzchołka " + sink + " (ujście) wynosi: " + maxFlow);
         return maxFlow;
     }
 
