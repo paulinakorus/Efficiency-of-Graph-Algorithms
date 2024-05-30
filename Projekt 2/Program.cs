@@ -9,10 +9,7 @@ namespace Projekt_2
         static async Task Main(string[] args)
         {
             Menu menu = new Menu();
-            //menu.GeneratorMenu();
-            
-            DirectoryFolder directoryFolder = new DirectoryFolder();
-            await directoryFolder.OpenAndCalculate();
+            menu.GeneratorMenu();
         }
     }
 }

@@ -19,7 +19,7 @@ internal class Menu
         {
             ("generating random graphs", "a", async () => await directoryFolder.GeneratingGraphsAndWritingToFileAsync()),
             ("display the graph in list and matrix form", "b", async () => await DisplayGraph()),
-            ("calculating the time of all algorithms", "c", () => Console.WriteLine("c")),
+            ("calculating the time of all algorithms", "c", async () => await directoryFolder.OpenAndCalculate()),
             ("the Prim's algorithm - minimum spanning tree", "d", async () => await Algorithm("Prim")),
             ("the Kruskal's algorithm - minimum spanning tree", "e", async () => await Algorithm("Kruskal")),
             ("the Dijkstra's algorithm - shortest path", "f", async () => await Algorithm("Dijkstra")),

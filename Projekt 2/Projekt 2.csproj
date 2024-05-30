@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Data\CSV\directed\" />
+    <Folder Include="Data\CSV\undirected\" />
     <Folder Include="Data\directed\25%25\100\" />
     <Folder Include="Data\directed\25%25\10\" />
     <Folder Include="Data\directed\25%25\150\" />

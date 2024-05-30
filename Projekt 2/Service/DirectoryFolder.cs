@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,54 @@ internal class DirectoryFolder
             //await OpenTypeFolderAsync(path);
         }
         await Task.WhenAll(tasks);
+
+        foreach (string path in BeginningPath)
+        {
+            CSV(path);
+        }
+    }
+
+    private void CSV(string type)
+    {
+        string path;
+        if (type == BeginningPath[0])
+        {
+            path = "C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\CSV\\undirected\\";
+            string[] paths = { Path.Combine(path, "25%.csv"), Path.Combine(path, "50%.csv"), Path.Combine(path, "99%.csv") };
+            var time = AllTime[0];
+            List<List<double>>[] lists = { time[0], time[1], time[2] };
+
+            var iterator = 0;
+            foreach(string pat in paths)
+            {
+                CsvWriteToFile(pat, lists[iterator++]);
+            }
+        }
+        else if (type == BeginningPath[1])
+        {
+            path = "C:\\Users\\pauko\\Desktop\\Studia\\Semestr IV\\AIZO\\Projekt\\Projekt 2\\Projekt 2\\Data\\CSV\\directed\\";
+            string[] paths = { Path.Combine(path, "25%.csv"), Path.Combine(path, "50%.csv"), Path.Combine(path, "99%.csv") };
+            var time = AllTime[0];
+            List<List<double>>[] lists = { time[0], time[1], time[2] };
+
+            var iterator = 0;
+            foreach (string pat in paths)
+            {
+                CsvWriteToFile(pat, lists[iterator++]);
+            }
+        }
+    }
+
+    private void CsvWriteToFile(string filePath, List<List<double>> list)
+    {
+        using (StreamWriter sw = new StreamWriter(filePath))
+        {
+            foreach (List<double> row in list)
+            {
+                string line = string.Join(",", row);
+                sw.WriteLine(line);
+            }
+        }
     }
 
     private async Task OpenTypeFolderAsync(string path)
