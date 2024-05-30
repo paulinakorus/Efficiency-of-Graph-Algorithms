@@ -11,11 +11,19 @@ internal class Uploading
 {
     public void UploadListGraph(Graph graph)
     {
-        Console.WriteLine(graph.Edges.Count + " " + graph.Vertices.Count);
-        foreach (var edge in graph.Edges)
+        ListGraph listGraph = new ListGraph();
+        var adjacencyList = listGraph.GeneratedList(graph);
+
+        foreach (var kvp in adjacencyList)
         {
-            Console.WriteLine(edge.Source.Id + " " + edge.Destination.Id + " " + edge.Weight);
+            Console.Write($"{kvp.Key}: ");
+            foreach (var neighbor in kvp.Value)
+            {
+                Console.Write($"{neighbor} ");
+            }
+            Console.WriteLine();
         }
+
     }
 
     public void UploadMatrixGraph(Graph graph)

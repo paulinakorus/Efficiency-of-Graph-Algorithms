@@ -10,6 +10,33 @@ internal class ListGraph
 {
     public int[,] ListExample { get; set; }
 
+    public Dictionary<int, List<int>> GeneratedList(Graph graph)
+    {
+        Dictionary<int, List<int>> adjacencyList = new Dictionary<int, List<int>>();
+
+        // Inicjalizujemy listę sąsiedztwa dla każdego wierzchołka
+        foreach (var vertex in graph.Vertices)
+        {
+            adjacencyList[vertex.Id] = new List<int>();
+        }
+
+        // Przechodzimy przez każdą krawędź
+        foreach (var edge in graph.Edges)
+        {
+            // Dodajemy krawędź do listy sąsiedztwa tylko jeśli jej źródło znajduje się w wierzchołkach grafu
+            if (adjacencyList.ContainsKey(edge.Source.Id))
+            {
+                adjacencyList[edge.Source.Id].Add(edge.Destination.Id);
+            }
+            else
+            {
+                // Jeśli źródło krawędzi nie znajduje się w wierzchołkach grafu, zgłaszamy błąd
+                throw new ArgumentException("Invalid edge source vertex.");
+            }
+        }
+        return adjacencyList;
+    }
+
     public int[,] GeneratingList(Graph graph)
     {
         int numVertices = graph.Vertices.Count;
@@ -36,42 +63,5 @@ internal class ListGraph
         return ListExample;
     }
 
-    /*
-     * public Dictionary<int, List<int>> GeneratingList(Graph graph)
-    {
-        Dictionary<int, List<int>> adjacencyList = new Dictionary<int, List<int>>();
-
-        // Inicjalizujemy listę sąsiedztwa dla każdego wierzchołka
-        foreach (var vertex in graph.Vertices)
-        {
-            adjacencyList[vertex.Id] = new List<int>();
-        }
-
-        // Przechodzimy przez każdą krawędź
-        foreach (var edge in graph.Edges)
-        {
-            // Dodajemy krawędź do listy sąsiedztwa tylko jeśli jej źródło znajduje się w wierzchołkach grafu
-            if (adjacencyList.ContainsKey(edge.Source.Id))
-            {
-                adjacencyList[edge.Source.Id].Add(edge.Destination.Id);
-            }
-            else
-            {
-                // Jeśli źródło krawędzi nie znajduje się w wierzchołkach grafu, zgłaszamy błąd
-                throw new ArgumentException("Invalid edge source vertex.");
-            }
-        }
-
-        foreach (var kvp in adjacencyList)
-        {
-            Console.Write($"Następnicy dla wierzchołka {kvp.Key}: ");
-            foreach (var neighbor in kvp.Value)
-            {
-                Console.Write($"{neighbor} ");
-            }
-            Console.WriteLine();
-        }
-
-        return adjacencyList;
-    }*/
+    
 }

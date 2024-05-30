@@ -15,11 +15,10 @@ internal class GraphGenerator
     {
         List<Graph> graphs = new List<Graph>();
 
-        Parallel.For(0, numberOfGraphs, x =>
+        for (int i = 0; i < numberOfGraphs; i++)
         {
             graphs.Add(GenerateRandomGraph(numberOfVertices, density, type));
-        });
-
+        }
         return graphs;
     }
 
@@ -41,6 +40,10 @@ internal class GraphGenerator
     private List<Edge> GenerateEdges(List<Vertex> verticesList, double density, string type)
     {
         int maxPossibleEdges = (type == "undirected") ? verticesList.Count * (verticesList.Count - 1) / 2 : verticesList.Count * (verticesList.Count - 1);
+
+        if (density == 99 && type == "directed")
+            maxPossibleEdges = verticesList.Count * (verticesList.Count - 1) / 2;
+
         int edges = (int)Math.Round(maxPossibleEdges * density / 100);
         HashSet<Tuple<int, int>> usedEdges = new HashSet<Tuple<int, int>>();
         List<Edge> edgeList = new List<Edge>();

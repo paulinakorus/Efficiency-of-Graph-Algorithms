@@ -38,17 +38,12 @@ internal class DirectoryFolder
         }
     }
 
-    private void ClearingFiles(string path)
+    public void ClearingFiles(string path)
     {
         string[] files = System.IO.Directory.GetFiles(path);
         Parallel.ForEach(files, file =>
         {
             File.Delete(file);
         });
-    }
-
-    private async Task OpenTypeFolderAscync(string path)
-    {
-
     }
 }
